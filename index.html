@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nor Arts - 产品主页</title>
+    <style>
+        /* 全局重置 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", "PingFang SC", "Microsoft YaHei", Arial, sans-serif;
+            background-color: #ffffff;
+            color: #000000;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* ================= 顶部导航栏 ================= */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 64px;
+            padding: 0 28px;
+            border-bottom: 3px solid #000000;
+            background-color: #fff;
+            flex-shrink: 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            height: 36px;
+            width: auto;
+            margin-right: 10px;
+        }
+
+        .logo-text {
+            font-size: 24px;
+            font-weight: 900;
+            color: #3b4cca;
+            letter-spacing: 0.3px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 24px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: 900;
+            color: #3b4cca;
+            letter-spacing: 0.3px;
+            transition: opacity 0.2s;
+        }
+
+        .nav-links a:hover {
+            opacity: 0.7;
+        }
+
+        /* ================= 顶部入口区（图文并茂） ================= */
+        .hero-section {
+            padding: 60px 28px 80px;
+            background: linear-gradient(135deg, #f8f8ff 0%, #ffffff 100%);
+            border-bottom: 3px solid #000000;
+            text-align: center;
+        }
+
+        .hero-title {
+            font-size: clamp(28px, 4.5vw, 42px);
+            font-weight: 900;
+            color: #000000;
+            letter-spacing: -0.5px;
+            margin-bottom: 12px;
+            line-height: 1.2;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(14px, 1.8vw, 17px);
+            color: #666666;
+            margin-bottom: 48px;
+            line-height: 1.6;
+        }
+
+        /* 入口卡片容器 */
+        .entry-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        /* 单个入口卡片 */
+        .entry-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: inherit;
+            padding: 28px 20px;
+            border: 4px solid #000000;
+            background-color: #ffffff;
+            transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .entry-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 8px 8px 0px #3b4cca;
+            border-color: #3b4cca;
+        }
+
+        .entry-card:active {
+            transform: translateY(-2px);
+            box-shadow: 4px 4px 0px #3b4cca;
+        }
+
+        /* 入口名称（上移后放最前） */
+        .entry-name {
+            font-size: 22px;
+            font-weight: 900;
+            color: #000000;
+            margin-bottom: 6px;
+            letter-spacing: -0.3px;
+        }
+
+        /* 入口副标题 */
+        .entry-tag {
+            font-size: 13px;
+            color: #888888;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+        }
+
+        /* 进入按钮（上移到图片之前） */
+        .entry-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background-color: #3b4cca;
+            color: #ffffff;
+            font-size: 15px;
+            font-weight: 900;
+            padding: 10px 22px;
+            border: 3px solid #000000;
+            box-shadow: 3px 3px 0px #000000;
+            transition: all 0.15s ease;
+            letter-spacing: 0.3px;
+            margin-bottom: 20px;
+        }
+
+        .entry-card:hover .entry-btn {
+            background-color: #2a38a8;
+        }
+
+        .entry-btn .arrow {
+            font-size: 17px;
+            transition: transform 0.2s ease;
+        }
+
+        .entry-card:hover .entry-btn .arrow {
+            transform: translateX(4px);
+        }
+
+        /* 入口图片区域（下移到最后） */
+        .entry-image {
+            width: 100%;
+            aspect-ratio: 4 / 3;
+            border: 3px solid #000000;
+            background-color: #f0f0f8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 88px;
+            overflow: hidden;
+            transition: border-color 0.25s ease;
+        }
+
+        .entry-card:hover .entry-image {
+            border-color: #3b4cca;
+        }
+
+        .entry-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* ================= 详细介绍区 ================= */
+        .intro-section {
+            padding: 80px 28px;
+            background-color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex: 1;
+        }
+
+        .intro-container {
+            width: 100%;
+            max-width: 900px;
+        }
+
+        /* 介绍标题 */
+        .intro-heading {
+            text-align: center;
+            margin-bottom: 56px;
+        }
+
+        .intro-heading h2 {
+            font-size: clamp(26px, 3.5vw, 36px);
+            font-weight: 900;
+            color: #000000;
+            letter-spacing: -0.5px;
+            margin-bottom: 12px;
+            line-height: 1.2;
+        }
+
+        .intro-heading p {
+            font-size: clamp(14px, 1.8vw, 17px);
+            color: #666666;
+            line-height: 1.6;
+        }
+
+        /* 每个产品介绍块 */
+        .intro-block {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            align-items: center;
+            margin-bottom: 72px;
+        }
+
+        .intro-block:last-child {
+            margin-bottom: 0;
+        }
+
+        /* 交替布局：第二个块翻转 */
+        .intro-block.reverse {
+            direction: rtl;
+        }
+
+        .intro-block.reverse > * {
+            direction: ltr;
+        }
+
+        /* 介绍图片 */
+        .intro-image {
+            width: 100%;
+            aspect-ratio: 4 / 3;
+            border: 4px solid #000000;
+            background-color: #f8f8ff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 100px;
+            box-shadow: 8px 8px 0px #3b4cca;
+            overflow: hidden;
+            transition: box-shadow 0.3s ease;
+        }
+
+        .intro-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* 介绍文字 */
+        .intro-text h3 {
+            font-size: 28px;
+            font-weight: 900;
+            color: #000000;
+            margin-bottom: 6px;
+            letter-spacing: -0.3px;
+        }
+
+        .intro-text .intro-tag {
+            display: inline-block;
+            font-size: 12px;
+            font-weight: 800;
+            color: #3b4cca;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            padding: 4px 10px;
+            background-color: #f0f0ff;
+            border-radius: 4px;
+        }
+
+        .intro-text p {
+            font-size: 15px;
+            line-height: 1.8;
+            color: #444444;
+            margin-bottom: 20px;
+        }
+
+        /* 特性列表 */
+        .intro-features {
+            list-style: none;
+            padding: 0;
+            margin-bottom: 24px;
+        }
+
+        .intro-features li {
+            font-size: 14px;
+            color: #333333;
+            padding: 8px 0 8px 28px;
+            position: relative;
+            line-height: 1.5;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .intro-features li:last-child {
+            border-bottom: none;
+        }
+
+        .intro-features li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            top: 8px;
+            color: #3b4cca;
+            font-weight: 900;
+            font-size: 16px;
+        }
+
+        /* 介绍块中的链接按钮 */
+        .intro-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background-color: #ffffff;
+            color: #3b4cca;
+            font-size: 15px;
+            font-weight: 900;
+            padding: 10px 22px;
+            border: 3px solid #3b4cca;
+            box-shadow: 3px 3px 0px #3b4cca;
+            text-decoration: none;
+            transition: all 0.15s ease;
+            letter-spacing: 0.3px;
+        }
+
+        .intro-link:hover {
+            background-color: #3b4cca;
+            color: #ffffff;
+            transform: translate(2px, 2px);
+            box-shadow: 1px 1px 0px #3b4cca;
+        }
+
+        .intro-link .arrow {
+            font-size: 16px;
+            transition: transform 0.2s ease;
+        }
+
+        .intro-link:hover .arrow {
+            transform: translateX(4px);
+        }
+
+        /* ================= 底部 Footer ================= */
+        .footer {
+            padding: 20px 28px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #fff;
+            flex-shrink: 0;
+            border-top: 3px solid #000000;
+        }
+
+        .copyright {
+            font-size: 16px;
+            font-weight: 800;
+            color: #3b4cca;
+            letter-spacing: 0.5px;
+        }
+
+        /* ================= 手机端适配 ================= */
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                height: auto;
+                padding: 12px 16px;
+                gap: 10px;
+            }
+
+            .logo-icon {
+                height: 30px;
+                margin-right: 8px;
+            }
+
+            .logo-text {
+                font-size: 20px;
+            }
+
+            .nav-links {
+                gap: 18px;
+            }
+
+            .nav-links a {
+                font-size: 15px;
+            }
+
+            .hero-section {
+                padding: 40px 16px 60px;
+            }
+
+            .hero-subtitle {
+                margin-bottom: 32px;
+            }
+
+            .entry-grid {
+                grid-template-columns: 1fr;
+                gap: 18px;
+            }
+
+            .entry-card {
+                padding: 20px 16px;
+            }
+
+            .entry-image {
+                font-size: 64px;
+            }
+
+            .entry-name {
+                font-size: 18px;
+            }
+
+            .intro-section {
+                padding: 60px 16px;
+            }
+
+            .intro-heading {
+                margin-bottom: 40px;
+            }
+
+            .intro-block {
+                grid-template-columns: 1fr;
+                gap: 28px;
+                margin-bottom: 48px;
+            }
+
+            .intro-block.reverse {
+                direction: ltr;
+            }
+
+            .intro-image {
+                font-size: 72px;
+                box-shadow: 6px 6px 0px #3b4cca;
+            }
+
+            .intro-text h3 {
+                font-size: 22px;
+            }
+
+            .intro-text p {
+                font-size: 14px;
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- 导航栏 -->
+    <header class="navbar">
+        <div class="logo-section">
+            <img src="*" alt="Nor Arts Logo" class="logo-icon">
+            <span class="logo-text">Nor Arts</span>
+        </div>
+        <nav class="nav-links">
+            <a href="#">Draw</a>
+            <a href="#">更多工具</a>
+            <a href="#">返回</a>
+            <a href="#">主页</a>
+        </nav>
+    </header>
+
+    <!-- ================= 顶部入口区 ================= -->
+    <section class="hero-section">
+        <h1 class="hero-title">创作，从 Nor Arts 开始</h1>
+        <p class="hero-subtitle">两款轻量级工具，为您的文字与绘画创作提供纯粹、高效的体验。</p>
+
+        <div class="entry-grid">
+            <!-- 入口 1：TXT 编辑器 -->
+            <a href="#" class="entry-card">
+                <!-- 名称和标签在上 -->
+                <h2 class="entry-name">TXT 编辑器</h2>
+                <div class="entry-tag">Text Editor</div>
+                <!-- 按钮紧跟在名称和标签之后 -->
+                <span class="entry-btn">
+                    立即使用 <span class="arrow">→</span>
+                </span>
+                <!-- 图片在最下方 -->
+                <div class="entry-image">
+                    <!-- 可替换为 <img src="txt-preview.png" alt="TXT 编辑器预览"> -->
+                    📝
+                </div>
+            </a>
+
+            <!-- 入口 2：绘图板 -->
+            <a href="#" class="entry-card">
+                <h2 class="entry-name">绘图板</h2>
+                <div class="entry-tag">Drawing Board</div>
+                <span class="entry-btn">
+                    立即使用 <span class="arrow">→</span>
+                </span>
+                <div class="entry-image">
+                    <!-- 可替换为 <img src="draw-preview.png" alt="绘图板预览"> -->
+                    🎨
+                </div>
+            </a>
+        </div>
+    </section>
+
+    <!-- ================= 详细介绍区 ================= -->
+    <section class="intro-section">
+        <div class="intro-container">
+            <div class="intro-heading">
+                <h2>深入了解我们的工具</h2>
+                <p>为创作者精心设计，专注于纯粹、高效的使用体验。</p>
+            </div>
+
+            <!-- 产品 1 详细介绍 -->
+            <div class="intro-block">
+                <div class="intro-image">
+                    <!-- 可替换为 <img src="txt-preview.png" alt="TXT 编辑器"> -->
+                    📝
+                </div>
+                <div class="intro-text">
+                    <h3>TXT 编辑器</h3>
+                    <span class="intro-tag">Text Editor</span>
+                    <p>
+                        一款极简的在线纯文本编辑器，专注于写作本身。所有内容自动保存在您的浏览器本地，无需登录，打开即用。支持多种主题配色和常用编辑操作，让写作回归纯粹。
+                    </p>
+                    <ul class="intro-features">
+                        <li>本地自动保存，刷新不丢失</li>
+                        <li>实时字符数 / 行数统计</li>
+                        <li>支持复制、下载 .txt、打印</li>
+                        <li>6 种主题配色，含夜间模式</li>
+                    </ul>
+                    <a href="#" class="intro-link">
+                        打开 TXT 编辑器 <span class="arrow">→</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- 产品 2 详细介绍（反转布局） -->
+            <div class="intro-block reverse">
+                <div class="intro-image">
+                    <!-- 可替换为 <img src="draw-preview.png" alt="绘图板"> -->
+                    🎨
+                </div>
+                <div class="intro-text">
+                    <h3>绘图板</h3>
+                    <span class="intro-tag">Drawing Board</span>
+                    <p>
+                        一款运行在浏览器中的绘图工具，支持画笔、橡皮擦、直线、矩形、圆形等多种工具。可以自由调整画布像素尺寸、导入图片作为底图、放大缩小视图，让创作自由挥洒。
+                    </p>
+                    <ul class="intro-features">
+                        <li>画笔 / 橡皮擦 / 形状工具</li>
+                        <li>自由调整画布像素尺寸</li>
+                        <li>导入图片作为底图</li>
+                        <li>支持放大缩小、下载 PNG</li>
+                    </ul>
+                    <a href="#" class="intro-link">
+                        打开绘图板 <span class="arrow">→</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 底部 -->
+    <footer class="footer">
+        <div class="copyright">©NorStudio 2026</div>
+    </footer>
+
+</body>
+</html>
